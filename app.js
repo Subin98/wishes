@@ -8,7 +8,6 @@ const port = 3000;
 const path = require('path');
 
 
-
 App.listen(process.env.PORT || port,(err)=>{
     if(err)
     console.log(err)
@@ -77,19 +76,21 @@ App.post("/api/sendwishes",(req,res)=>{
         console.log(err)
         else
         {
-            console.log(data.friendMail);
+
+            console.log(process.env.PORT);
             let mailTransporter = nodemailer.createTransport({
                 service: 'Hotmail',
                 auth: {
-                    user: process.env.user,
-                    pass: process.env.pass
+                    user: 'wishes2022@hotmail.com',
+                    pass: 'b612selfie'
                   }
             });
             let mailDetails = {
                 from: 'wishes2022@hotmail.com',
                 to: data.friendMail,
                 subject: 'Happy 2022',
-                text: 'Hello '+data.friendName
+                text: 'Hello '+data.friendName,
+                html:"<br>"+data.myName +" send you wishes-> <a href=https://wishes2022.herokuapp.com/wish/"+id+">click here</a>"
             }
 
             mailTransporter.sendMail(mailDetails, function(err, data) {
