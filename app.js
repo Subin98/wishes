@@ -6,6 +6,8 @@ const nodemailer = require("nodemailer");
 const App = express();
 const port = 3000;
 const path = require('path');
+const { config } = require("dotenv");
+require("dotenv").config();
 
 
 App.listen(process.env.PORT || port,(err)=>{
@@ -77,20 +79,20 @@ App.post("/api/sendwishes",(req,res)=>{
         else
         {
 
-            console.log(process.env.PORT);
+            console.log(process.env.username);
             let mailTransporter = nodemailer.createTransport({
-                service: 'Hotmail',
+                service: 'gmail',
                 auth: {
-                    user: 'wishes2022@hotmail.com',
-                    pass: 'b612selfie'
+                    user: process.env.USER,
+                    pass: process.env.PASS
                   }
             });
             let mailDetails = {
-                from: 'wishes2022@hotmail.com',
+                from: 'subizubin98@gmail.com',
                 to: data.friendMail,
                 subject: 'Happy 2022',
                 text: 'Hello '+data.friendName,
-                html:"<br>"+data.myName +" send you wishes-> <a href=https://wishes2022.herokuapp.com/wish/"+id+">click here</a>"
+                html:"Hello "+data.friendName+",<br>"+data.myName +" send you wishes-> <a href=https://wishes2022.herokuapp.com/wish/"+id+">click here</a>"
             }
 
             mailTransporter.sendMail(mailDetails, function(err, data) {
